@@ -4,10 +4,8 @@ import json
 from pyspark.sql import SparkSession
 
 
-from filters import blacklist, length, ngram_dist
-
-
 def main(input_hfs_path, output_hfs_path, config):
+    from filters import blacklist, length, ngram_dist
     spark = SparkSession \
         .builder \
         .appName("TextOutlier") \
