@@ -5,7 +5,7 @@ from pyspark.sql import SparkSession
 
 
 def main(input_hfs_path, output_hfs_path, config):
-    import blacklist, length, ngram_dist
+    from filters import blacklist, length, ngram_dist
     spark = SparkSession \
         .builder \
         .appName("TextOutlier") \
