@@ -31,15 +31,22 @@ HIGH_QUANTILE = 0.999
 N_GRAMS = [1, 2]
 LOGPROB_QUANTILE_CUTOFF = 0.01
 
+"""
+spark-submit script.py \
+    '/user/zp489/reddit_sarcasm_small.txt' \
+    reddit_sarcasm_small_outlier.txt
+"""
 
 if __name__ == "__main__":
 
     _, input_path, output_path = sys.argv
+    import test_import
+    print(test_import.CONST)
 
     from pyspark.sql import SparkSession
     spark = SparkSession \
         .builder \
-        .appName("task2") \
+        .appName("TextOutlier") \
         .getOrCreate()
     sc = spark.sparkContext
 
@@ -65,6 +72,7 @@ if __name__ == "__main__":
     data = blacklist_inter1 \
         .filter(lambda _: not _[2]) \
         .map(lambda _: (_[0], _[1]))
+    print(filtered_blacklist.count())
 
 
     length_inter1 = data \
@@ -87,12 +95,13 @@ if __name__ == "__main__":
     data = length_inter1 \
         .filter(lambda _: low_q < _[0] < high_q) \
         .map(lambda _: (_[1], _[2]))
+    print(filtered_length.count())
 
 
     for ngram_n in N_GRAMS:
         sql_context = pyspark.sql.SQLContext(sc)
         data_df = data.map(lambda _: (_[0], _[1], list(_[1]))).toDF(["id", "text", "splittext"])
-        ngram = NGram(n=2, inputCol="splittext", outputCol="ngrams")
+        ngram = NGram(n=ngram_n, inputCol="splittext", outputCol="ngrams")
         data_df_ngram = ngram.transform(data_df)
         flat_ngram = data_df_ngram \
             .select(["id", "ngrams", "text"]).rdd \
@@ -105,14 +114,7 @@ if __name__ == "__main__":
             .reduce(add)
         all_ngram_dist = all_ngram_counts \
             .map(lambda _: (_[0], _[1]/total_count))
-        """
-        x = flat_ngram \
-            .map(lambda _: (_[1], _[0])) \
-            .join(all_ngram_dist) \
-            .map(lambda _: (_[1][0], np.log(_[1][1]))) \
-            .groupByKey() \
-            .map(lambda _: (_[0], sum(_[1]) / len(_[1])))
-        """
+
         logprob = flat_ngram \
             .map(lambda _: (_[1], _[0])) \
             .join(all_ngram_dist) \
@@ -135,10 +137,13 @@ if __name__ == "__main__":
             .filter(lambda _: _[1] < logprob_cutoff) \
             .join(data) \
             .map(lambda _: (_[0], _[1][1]))
+        print(ngram_n, filtered_ngrams.count())
 
     filtered_rdd = sc.union(filtered_rdds)
+    print(filtered_rdd.count())
     outliers = filtered_rdd \
         .leftOuterJoin(original_data) \
         .map(lambda _: (_[0], _[1][1], _[1][0]))
+    print(outliers.count())
     outliers.saveAsTextFile(output_path)
 
