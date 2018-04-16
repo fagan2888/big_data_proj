@@ -40,6 +40,8 @@ spark-submit script.py \
 if __name__ == "__main__":
 
     _, input_path, output_path = sys.argv
+    import test_import
+    print(test_import.CONST)
 
     from pyspark.sql import SparkSession
     spark = SparkSession \
