@@ -1,8 +1,5 @@
 import argparse
 import json
-import numpy as np
-import pandas as pd
-import sys
 
 from pyspark.sql import SparkSession
 
@@ -61,9 +58,9 @@ def main(input_hfs_path, output_hfs_path, config):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Textual Outlier Detection')
-    parser.add_argument("input_hfs_path", type=str, required=True)
-    parser.add_argument("output_hfs_path", type=str, required=True)
-    parser.add_argument("config_json_path", type=str, required=True)
+    parser.add_argument("--input_hfs_path", type=str, required=True)
+    parser.add_argument("--output_hfs_path", type=str, required=True)
+    parser.add_argument("--config_json_path", type=str, required=True)
     args = parser.parse_args()
 
     config = json.loads(args.config_json_path)
