@@ -63,7 +63,8 @@ if __name__ == "__main__":
     parser.add_argument("--config_json_path", type=str, required=True)
     args = parser.parse_args()
 
-    config = json.loads(args.config_json_path)
+    with open(args.config_json_path, "r") as f:
+        config = json.loads(f.read())
     main(
         input_hfs_path=args.input_hfs_path,
         output_hfs_path=args.output_hfs_path,
