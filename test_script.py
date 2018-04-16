@@ -139,5 +139,6 @@ filtered_rdd = sc.union(filtered_rdds)
 print(filtered_rdd.count())
 outliers = filtered_rdd \
     .leftOuterJoin(original_data) \
-    .map(lambda _: (_[0], _[1][1], _[1][0]))
+    .map(lambda _: (_[0], _[1][1], _[1][0]))\
+    .sortByKey()
 print(outliers.count())
