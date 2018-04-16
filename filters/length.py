@@ -1,5 +1,5 @@
 import pandas as pd
-import numpy as np
+import sys
 
 from operator import add
 
@@ -21,7 +21,7 @@ def filter_length(data, low_quantile, high_quantile):
         low_q = length_counts_srs.quantile(low_quantile)
 
     if high_quantile == 1.0:
-        high_q = np.inf
+        high_q = sys.maxsize
     else:
         high_q = length_counts_srs.quantile(high_quantile)
 
