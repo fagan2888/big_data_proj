@@ -1,0 +1,17 @@
+{
+  "blacklist_case_sensitive": [
+    ""
+  ],
+  "blacklist_case_insensitive": [
+    "black",
+    "null",
+    "nan"
+  ],
+  "length_low_quantile": 0.001,
+  "length_high_quantile": 0.999,
+  "ngram_list": [
+    1,
+    2
+  ],
+  "ngram_logprob_quantile_cutoff": 0.01
+}
