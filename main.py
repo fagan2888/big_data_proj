@@ -22,6 +22,7 @@ def main(input_hfs_path, output_hfs_path, config):
     data = original_data
 
     # 1. Blacklist
+    print("Blacklist filtering")
     data, filtered_data = blacklist.filter_blacklist(
         data=data,
         cs_blacklist=config["blacklist_case_sensitive"],
@@ -29,7 +30,9 @@ def main(input_hfs_path, output_hfs_path, config):
     )
     filtered_rdds.append(filtered_data)
 
+
     # 2. Lengths
+    print("Length filtering")
     data, filtered_data = length.filter_length(
         data=data,
         low_quantile=config["length_low_quantile"],
@@ -40,6 +43,8 @@ def main(input_hfs_path, output_hfs_path, config):
     # 3. N-gram Distribution
     for ngram_n, ngram_score_type, ngram_score_quantile_cutoff \
             in config["ngram_filter_list"]:
+        print("{}-gram {} {} Filtering".format(
+            ngram_n, ngram_score_type, ngram_score_quantile_cutoff))
         data, filtered_data = ngram_dist.filter_ngrams(
             data=data,
             ngram_n=ngram_n,
