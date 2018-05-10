@@ -71,7 +71,7 @@ def filter_ngrams(data, ngram_n, score_type, score_quantile_cutoff):
                 .format(ngram_n, score_type, score_quantile_cutoff, _[1])
         ))
     remaining_data = score \
-        .filter(lambda _: _[1] < score_cutoff) \
+        .filter(lambda _: _[1] > score_cutoff) \
         .join(data) \
         .map(lambda _: (_[0], _[1][1]))
     return (
