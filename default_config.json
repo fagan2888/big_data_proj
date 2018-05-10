@@ -3,7 +3,7 @@
     ""
   ],
   "blacklist_case_insensitive": [
-    "black",
+    "blank",
     "null",
     "nan"
   ],
