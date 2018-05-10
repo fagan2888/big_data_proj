@@ -51,7 +51,7 @@ def filter_ngrams(data, ngram_n, score_type, score_quantile_cutoff):
         negative_kl_ngram = ngram_row_data \
             .map(lambda _: (
                 _[1][0][0],
-                _[1][1] * (np.log(_[1][0][1] / _[1][0][2]) - np.log(_[1][1])))
+                float(_[1][1] * (np.log(_[1][0][1] / _[1][0][2]) - np.log(_[1][1]))))
                  )
 
         negative_kl_score = negative_kl_ngram \
