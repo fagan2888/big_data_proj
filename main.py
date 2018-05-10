@@ -38,11 +38,13 @@ def main(input_hfs_path, output_hfs_path, config):
     filtered_rdds.append(filtered_data)
 
     # 3. N-gram Distribution
-    for ngram_n in config["ngram_list"]:
+    for ngram_n, ngram_score_type, ngram_score_quantile_cutoff \
+            in config["ngram_filter_list"]:
         data, filtered_data = ngram_dist.filter_ngrams(
             data=data,
             ngram_n=ngram_n,
-            logprob_quantile_cutoff=config["ngram_logprob_quantile_cutoff"],
+            score_type=ngram_score_type,
+            score_quantile_cutoff=ngram_score_quantile_cutoff,
         )
         filtered_rdds.append(filtered_data)
 

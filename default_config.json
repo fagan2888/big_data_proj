@@ -9,9 +9,10 @@
   ],
   "length_low_quantile": 0.001,
   "length_high_quantile": 0.999,
-  "ngram_list": [
-    1,
-    2
-  ],
-  "ngram_logprob_quantile_cutoff": 0.01
+  "ngram_filter_list": [
+    [1, "logprob", 0.01],
+    [1, "kl", 0.01],
+    [2, "logprob", 0.01],
+    [2, "kl", 0.01],
+  ]
 }
