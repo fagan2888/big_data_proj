@@ -11,7 +11,7 @@
     {
       "filter": "Length",
       "config": {
-        "low_quantile": 0.001
+        "low_quantile": 0.001,
       }
     },
     {
@@ -19,7 +19,7 @@
       "config": {
         "ngram_n": 1,
         "score_type": "logprob",
-        "score_quantile_cutoff": 0.001
+        "score_quantile_cutoff": 0.01
       }
     },
     {
@@ -27,7 +27,7 @@
       "config": {
         "ngram_n": 1,
         "score_type": "kl",
-        "score_quantile_cutoff": 0.001
+        "score_quantile_cutoff": 0.01
       }
     },
     {
@@ -35,7 +35,7 @@
       "config": {
         "ngram_n": 2,
         "score_type": "kl",
-        "score_quantile_cutoff": 0.001
+        "score_quantile_cutoff": 0.01
       }
     },
     {
@@ -43,7 +43,7 @@
       "config": {
         "ngram_n": 2,
         "score_type": "logprob",
-        "score_quantile_cutoff": 0.001
+        "score_quantile_cutoff": 0.01
       }
     }
   ]
