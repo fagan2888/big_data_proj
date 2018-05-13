@@ -18,7 +18,7 @@ class BlacklistFilter(AbstractFilter):
 
     @property
     def short_name(self):
-        return "Blacklist Filter: CS (), CI ()".format(
+        return "Blacklist Filter: CS ({}), CI ({})".format(
             len(self.case_sensitive_blacklist),
             len(self.case_insensitive_blacklist),
         )
