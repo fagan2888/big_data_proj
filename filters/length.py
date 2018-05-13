@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 import sys
 
@@ -30,19 +31,24 @@ class LengthFilter(AbstractFilter):
             .map(lambda _: (_[0], 1)) \
             .reduceByKey(add)
 
-        length_counts_srs = pd.Series(
+        length_counts_map = pd.Series(
             dict(length_counts.collect())
-        ).sort_values()
+        ).sort_index()
+        running_sum = length_counts_map.cumsum()
+        total_count = length_counts_map.sum()
 
         if self.low_quantile == 0:
-            low_q = 0
+            low_q_n = 0
         else:
-            low_q = length_counts_srs.quantile(self.low_quantile)
+            low_q_n = int(np.floor(total_count * self.low_quantile))
 
         if self.high_quantile == 1.0:
-            high_q = sys.maxsize
+            high_q_n = total_count
         else:
-            high_q = length_counts_srs.quantile(self.high_quantile)
+            high_q_n = int(np.ceil(total_count * self.high_quantile))
+
+        low_q = running_sum[running_sum >= low_q_n].index[0]
+        high_q = running_sum[running_sum <= high_q_n].index[-1]
 
         filtered_data = length_inter1 \
             .filter(lambda _: not (low_q < _[0] < high_q)) \
