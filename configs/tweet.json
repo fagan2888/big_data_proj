@@ -11,7 +11,7 @@
     {
       "filter": "Length",
       "config": {
-        "low_quantile": 0.001,
+        "low_quantile": 0.001
       }
     },
     {
