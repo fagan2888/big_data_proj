@@ -45,7 +45,7 @@ def main(input_hfs_path,
             filtered_count = filtered_data.count()
             total_filtered_count += filtered_count
             print("  Filtered out {} observation{} -- "
-                  "{:.2f}\%@TOTAL, {:.2f}\%@REM".format(
+                  "{:.2f} of total, {:.2f} of remainder".format(
                         filtered_count,
                         "" if filtered_count == 1 else "s",
                         filtered_count / total_count * 100,
@@ -54,13 +54,13 @@ def main(input_hfs_path,
             remaining_count -= filtered_count
 
     if config["show_counts"]:
-        print("ORIGINAL:  {} (:.2f{}%)".format(
+        print("ORIGINAL:  {} ({:.2f}%)".format(
             total_count, 100,
         ))
-        print("FILTERED:  {} (:.2f{}%)".format(
+        print("FILTERED:  {} ({:.2f}%)".format(
             total_filtered_count, total_filtered_count / total_count * 100,
         ))
-        print("REMAINING: {} (:.2f{}%)".format(
+        print("REMAINING: {} ({:.2fou}%)".format(
             remaining_count, remaining_count / total_count * 100,
         ))
 

@@ -10,11 +10,13 @@ from filters.core import AbstractFilter
 
 class NGramFilter(AbstractFilter):
 
-    def __init__(self, ngram_n, score_type, score_quantile_cutoff):
+    def __init__(self, ngram_n, score_type, score_quantile_cutoff,
+                 accuracy=0.001):
         super(NGramFilter, self).__init__()
         self.ngram_n = ngram_n
         self.score_type = score_type
         self.score_quantile_cutoff = score_quantile_cutoff
+        self.accuracy = accuracy
 
     @property
     def short_name(self):
@@ -82,7 +84,7 @@ class NGramFilter(AbstractFilter):
 
         score_df = score.toDF(["id", "score"])
         score_cutoff = score_df.stat.approxQuantile(
-            "score", [self.score_quantile_cutoff], 0.001)[0]
+            "score", [self.score_quantile_cutoff], self.accuracy)[0]
 
         filtered_ngrams = score \
             .filter(lambda _: _[1] < score_cutoff) \
