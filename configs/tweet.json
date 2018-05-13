@@ -1,47 +1,50 @@
-[
-  {
-    "filter": "Blacklist",
-    "config": {
-      "case_sensitive_blacklist": [""],
-      "case_insensitive_blacklist": ["blank", "null", "nan"]
+{
+  "show_counts": true,
+  "filters": [
+    {
+      "filter": "Blacklist",
+      "config": {
+        "case_sensitive_blacklist": [""],
+        "case_insensitive_blacklist": ["blank", "null", "nan"]
+      }
+    },
+    {
+      "filter": "Length",
+      "config": {
+        "low_quantile": 0.001
+      }
+    },
+    {
+      "filter": "NGram",
+      "config": {
+        "ngram_n": 1,
+        "score_type": "logprob",
+        "score_quantile_cutoff": 0.001
+      }
+    },
+    {
+      "filter": "NGram",
+      "config": {
+        "ngram_n": 1,
+        "score_type": "kl",
+        "score_quantile_cutoff": 0.001
+      }
+    },
+    {
+      "filter": "NGram",
+      "config": {
+        "ngram_n": 2,
+        "score_type": "kl",
+        "score_quantile_cutoff": 0.001
+      }
+    },
+    {
+      "filter": "NGram",
+      "config": {
+        "ngram_n": 2,
+        "score_type": "logprob",
+        "score_quantile_cutoff": 0.001
+      }
     }
-  },
-  {
-    "filter": "Length",
-    "config": {
-      "low_quantile": 0.001
-    }
-  },
-  {
-    "filter": "NGram",
-    "config": {
-      "ngram_n": 1,
-      "score_type": "logprob",
-      "score_quantile_cutoff": 0.001
-    }
-  },
-  {
-    "filter": "NGram",
-    "config": {
-      "ngram_n": 1,
-      "score_type": "kl",
-      "score_quantile_cutoff": 0.001
-    }
-  },
-  {
-    "filter": "NGram",
-    "config": {
-      "ngram_n": 2,
-      "score_type": "kl",
-      "score_quantile_cutoff": 0.001
-    }
-  },
-  {
-    "filter": "NGram",
-    "config": {
-      "ngram_n": 2,
-      "score_type": "logprob",
-      "score_quantile_cutoff": 0.001
-    }
-  }
-]
+  ]
+}

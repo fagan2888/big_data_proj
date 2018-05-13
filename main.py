@@ -80,7 +80,7 @@ def main(input_hfs_path,
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Textual Outlier Detection')
     parser.add_argument("--input_hfs_path", type=str, required=True)
-    parser.add_argument("--filtered_output_hfs_path", type=str, required=True)
+    parser.add_argument("--outliers_output_hfs_path", type=str, required=True)
     parser.add_argument("--clean_output_hfs_path",
                         type=str, required=False, default="")
     parser.add_argument("--config_json_path", type=str, required=True)
