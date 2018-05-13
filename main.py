@@ -60,7 +60,7 @@ def main(input_hfs_path,
         print("FILTERED:  {} ({:.2f}%)".format(
             total_filtered_count, total_filtered_count / total_count * 100,
         ))
-        print("REMAINING: {} ({:.2fou}%)".format(
+        print("REMAINING: {} ({:.2f}%)".format(
             remaining_count, remaining_count / total_count * 100,
         ))
 
