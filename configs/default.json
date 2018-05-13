@@ -26,22 +26,6 @@
     {
       "filter": "NGram",
       "config": {
-        "ngram_n": 1,
-        "score_type": "kl",
-        "score_quantile_cutoff": 0.01
-      }
-    },
-    {
-      "filter": "NGram",
-      "config": {
-        "ngram_n": 2,
-        "score_type": "kl",
-        "score_quantile_cutoff": 0.01
-      }
-    },
-    {
-      "filter": "NGram",
-      "config": {
         "ngram_n": 2,
         "score_type": "logprob",
         "score_quantile_cutoff": 0.01
