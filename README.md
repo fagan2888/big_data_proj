@@ -13,6 +13,7 @@ spark-submit --py-files=lib.zip main.py \
 ```
 
 ### To build:
+
 ```bash
-zip lib.zip filters/*
+source build.sh
 ```

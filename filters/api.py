@@ -9,7 +9,8 @@ FILTER_MAP = {
 }
 
 
-def resolve_filter(config):
-    config = config.copy()
-    filter_type = config.pop("filter")
-    return FILTER_MAP[filter_type].initialize_from_config(config)
+def resolve_filter(filter_config):
+    filter_type = filter_config["filter"]
+    return FILTER_MAP[filter_type].initialize_from_config(
+        filter_config["config"]
+    )
