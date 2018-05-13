@@ -5,7 +5,7 @@ from pyspark.sql import SparkSession
 
 
 def main(input_hfs_path, output_hfs_path, config):
-    from filters import blacklist, length, ngram_dist
+    from filters.api import resolve_filter
     spark = SparkSession \
         .builder \
         .appName("TextOutlier") \
@@ -21,35 +21,14 @@ def main(input_hfs_path, output_hfs_path, config):
         .map(lambda _: (_[1], _[0]))
     data = original_data
 
-    # 1. Blacklist
-    print("Blacklist filtering")
-    data, filtered_data = blacklist.filter_blacklist(
-        data=data,
-        cs_blacklist=config["blacklist_case_sensitive"],
-        ci_blacklist=config["blacklist_case_insensitive"],
-    )
-    filtered_rdds.append(filtered_data)
-
-
-    # 2. Lengths
-    print("Length filtering")
-    data, filtered_data = length.filter_length(
-        data=data,
-        low_quantile=config["length_low_quantile"],
-        high_quantile=config["length_high_quantile"],
-    )
-    filtered_rdds.append(filtered_data)
-
-    # 3. N-gram Distribution
-    for ngram_n, ngram_score_type, ngram_score_quantile_cutoff \
-            in config["ngram_filter_list"]:
-        print("{}-gram {} {} Filtering".format(
-            ngram_n, ngram_score_type, ngram_score_quantile_cutoff))
-        data, filtered_data = ngram_dist.filter_ngrams(
+    for filter_index, filter_config in enumerate(config):
+        filter_instance = resolve_filter(config)
+        print("Running [{}] {}".format(
+            filter_index, filter_instance.short_name
+        ))
+        data, filtered_data = filter_instance.run_filter(
             data=data,
-            ngram_n=ngram_n,
-            score_type=ngram_score_type,
-            score_quantile_cutoff=ngram_score_quantile_cutoff,
+            filter_index=filter_index,
         )
         filtered_rdds.append(filtered_data)
 
