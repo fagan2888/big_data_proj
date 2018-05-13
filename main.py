@@ -22,7 +22,7 @@ def main(input_hfs_path, output_hfs_path, config):
     data = original_data
 
     for filter_index, filter_config in enumerate(config):
-        filter_instance = resolve_filter(config)
+        filter_instance = resolve_filter(filter_config)
         print("Running [{}] {}".format(
             filter_index, filter_instance.short_name
         ))
