@@ -8,7 +8,7 @@
     "nan"
   ],
   "length_low_quantile": 0.001,
-  "length_high_quantile": 0.999,
+  "length_high_quantile": 1,
   "ngram_filter_list": [
     [1, "logprob", 0.01],
     [1, "kl", 0.01],
